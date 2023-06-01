@@ -1,0 +1,570 @@
+<!doctype html>
+<html class="no-js " lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>Nshift- LTS Services</title>
+	<link rel="icon" type="image/ico" href="assets/images/favicon.ico" />
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/js/vendor/bootstrap/bootstrap.min.css">
+	<link rel="stylesheet" href="assets/css/vendor/animsition.min.css">
+	<link rel="stylesheet" href="assets/css/main.css">
+	<link rel="stylesheet" href="assets/js/vendor/sweetalert/sweetalert2.css">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<style>
+		input:read-only {
+			background-color: #f5f5f5;
+			border: 1px solid #ddd;
+			color: #888;
+		}
+
+		table {
+			border-collapse: collapse;
+			width: 50%;
+		}
+
+		th,
+		td {
+			border: 1px solid black;
+			padding: 8px;
+		}
+
+		th {
+			background-color: #f2f2f2;
+		}
+
+		#carrierList>tbody>tr:hover {
+			background: #0015A3;
+			color: white;
+		}
+	</style>
+</head>
+
+<body id="Nshift" class="main_Wrapper">
+	<div id="wrap" class="animsition">
+		<div id="controls">
+			<aside id="leftmenu" style="top:0px">
+				<div id="leftmenu-wrap">
+					<div class="panel-group slim-scroll" role="tablist">
+						<div class="panel panel-default">
+							<div id="leftmenuNav" class="panel-collapse collapse in" role="tabpanel">
+								<div class="panel-body">
+									<ul id="navigation">
+										<li>
+											<a href="ltsservices.html"> <i class="fa fa-angle-right"></i>LTS
+												Services</a>
+										</li>
+										<li class="active">
+											<a href="addlts.html"> <i class="fa fa-angle-right"></i>Add LTS Service</a>
+										</li>
+										<li>
+											<a href="uploadlts.html"> <i class="fa fa-angle-right"></i>Upload LTS
+												Logo</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</aside>
+		</div>
+		<section style="top:0px" id="content">
+			<div class="page bootstrap-page-tables">
+				<div class="b-b mb-10">
+					<div class="row">
+						<div class="col-sm-6 col-xs-12">
+							<h1 class="h3 m-0">DH LTS Services</h1>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 col-sm-12">
+						<section style="box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;" class="boxs">
+							<div class="boxs-header">
+								<h3 class="custom-font hb-blush">
+									<strong>Add LTS Service</strong>
+								</h3>
+							</div>
+							<div class="boxs-body">
+								<form id="lts-form">
+									<div class="row">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label for="code">Code:</label>
+												<input class="form-control" type="text" id="code" name="code" value="">
+											</div>
+											<div class="form-group">
+												<label for="pudoSystem">PudoSystem:</label>
+												<input type="text" class="form-control" id="pudoSystem"
+													name="pudoSystem" value="">
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group">
+												<label for="sourceSystem">Source System:</label>
+												<input class="form-control" type="text" id="sourceSystem"
+													name="sourceSystem" value="DH">
+											</div>
+											<div class="form-group">
+												<label for="sourceSystem">pudoId:</label>
+												<input class="form-control" type="text" id="pudoId" name="pudoId"
+													value="">
+											</div>
+										</div>
+										<div class="col-md-6">
+
+											<div class="form-group">
+												<label for="caption">Caption:</label>
+												<input class="form-control" type="text" id="caption" name="caption"
+													value="">
+											</div>
+											<div class="form-group">
+												<label for="isCustomAgent">isCustomAgent:</label>
+												<select class="form-control" id="isCustomAgent" name="isCustomAgent">
+													<option value="false">False</option>
+													<option value="true">True</option>
+												</select>
+											</div>
+										</div>
+
+										<div class="col-md-6">
+											<div class="form-group">
+												<label for="startDate">Start Date:</label>
+												<input class="form-control" type="text" id="startDate" name="startDate"
+													value="">
+											</div>
+											<div class="form-group">
+												<label for="logoId">Logo ID:</label>
+												<input class="form-control" type="text" id="logoId" name="logoId"
+													value="">
+											</div>
+										</div>
+										<div class="col-md-6">
+											<button type="button" class="btn btn-raised btn-success btn-sm"
+												id="addExternalSystemAddonRow">Enable External System</button>
+											<div id="externalSystemAddonsContainer">
+												<h4 class="custom-font hb-blush">
+													<strong>External System Add-ons</strong>
+												</h4>
+												<input class="form-control" type="text" id="externalSystemCode"
+													name="externalSystemCode" placeholder="externalSystemCode" value="">
+												<input class="form-control" placeholder="externalSystemCarrier"
+													type="text" id="externalSystemCarrier" name="externalSystemCarrier"
+													value="">
+												<input class="form-control" placeholder="externalSystemType" type="text"
+													id="externalSystemType" name="externalSystemType" value="">
+												<input class="form-control" placeholder="typeWhenAgentExists"
+													type="text" id="typeWhenAgentExists" name="typeWhenAgentExists"
+													value="">
+												<input class="form-control" placeholder="typeWhenPickupLockerExists"
+													type="text" id="typeWhenPickupLockerExists"
+													name="typeWhenPickupLockerExists" value="">
+												<select class="form-control"
+													id="displayCustomerTypeOfficeDeliverySetting"
+													name="displayCustomerTypeOfficeDeliverySetting">
+													<option value="true">True</option>
+													<option value="false">False</option>
+												</select>
+											</div>
+
+											<br> <button type="button" class="btn btn-raised btn-success btn-sm"
+												id="fieldsRow">Enable Fields</button>
+
+											<div id="FieldsContainer">
+												<h4 class="custom-font hb-blush"><strong>Fields</strong></h4>
+												<input class="form-control" type="text" id="fieldId" name="fieldID"
+													placeholder="id" value="">
+												<input class="form-control" placeholder="caption" type="text"
+													id="fieldCaption" name="fieldCaption" value="">
+												<input class="form-control" placeholder="type" type="text"
+													id="fieldType" name="fieldType" value="">
+
+												<select class="form-control" id="fieldMandatory" name="fieldMandatory">
+													<option value="true">True</option>
+													<option value="false">False</option>
+												</select>
+											</div>
+											<br> <button type="button" class="btn btn-raised btn-success btn-sm"
+												id="AddonRow">Enable Addon</button>
+											<div class="col-md-12">
+											</div>
+											<div id="addonContainer">
+												<div class="addon-section">
+													<h4 class="custom-font hb-blush">
+														<strong>Addons</strong>
+													</h4>
+													<td><button type="button" class="btn btn-raised btn-danger btn-sm"
+															id="deleteBtn">Delete Addon</button></td>
+
+													<div class="addons-row">
+														<div class="form-group">
+															<label for="addonId">Addon ID:</label>
+															<input type="text" class="form-control" name="addonId"
+																placeholder="Addon ID">
+														</div>
+														<div class="form-group">
+															<label for="caption">Caption:</label>
+															<input type="text" class="form-control" name="caption"
+																placeholder="Caption">
+														</div>
+														<div style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; margin: 1%;"
+															class="fields-section">
+															<table class="table table-bordered" id="fields-table">
+																<thead>
+																	<tr>
+																		<th>Field ID</th>
+																		<th>Field Caption</th>
+																		<th>Field Type</th>
+																		<th>Mandatory</th>
+																		<th></th>
+																	</tr>
+																</thead>
+																<tbody>
+																	<tr class="field-row">
+																		<td><input type="text" name="fieldId1"
+																				placeholder="Field ID"></td>
+																		<td><input type="text" name="fieldCaption1"
+																				placeholder="Field Caption"></td>
+																		<td><input type="text" name="fieldType1"
+																				placeholder="Field Type"></td>
+																		<td>
+																			<select name="mandatory">
+																				<option value="true">True</option>
+																				<option value="false">False</option>
+																			</select>
+																		</td>
+
+																		<td><button type="button"
+																				class="btn btn-raised btn-danger btn-sm"
+																				id="deleteFieldBtn">Remove</button></td>
+																	</tr>
+																</tbody>
+															</table>
+															<button type="button" style="margin-left:1%; "
+																class="btn btn-raised btn-primary btn-sm"
+																id="addFieldBtn">Add</button>
+														</div>
+														<div style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; margin:1%; margin-bottom: 30px;"
+															class="external-system-addons-section">
+															<table class="table table-bordered" id="external-table">
+																<thead>
+																	<tr>
+																		<th>External System Code</th>
+																		<th>Type</th>
+																		<th></th>
+																	</tr>
+																</thead>
+																<tbody>
+																	<tr class="external-row">
+																		<td><input type="text" name="externalSystemCode"
+																				placeholder="External System Code"></td>
+																		<td><input type="text" name="externalSystemType"
+																				placeholder="Type"></td>
+																		<td><button type="button"
+																				class="btn btn-raised btn-danger btn-sm"
+																				id="removeExternalBtn">Remove</button>
+																		</td>
+																	</tr>
+																</tbody>
+															</table>
+															<tr>
+																<button style="margin-left:1%;" type="button"
+																	class="btn btn-raised btn-primary btn-sm"
+																	id="addFieldsBtn">Add</button>
+															</tr>
+														</div>
+													</div>
+												</div>
+												<button type="button" class="btn btn-raised btn-info btn-sm"
+													id="addAddonBtn">Add New Addon</button>
+											</div>
+										</div>
+									</div>
+									<button type="submit" class="btn btn-raised btn-primary">Submit</button>
+								</form>
+								<div id="alertSucess" class="alert alert-success" role="alert"> LTS Servie Added </div>
+								<div id="alertError" class="alert alert-danger" role="alert"> Could not create LTS
+									Servie </div>
+							</div>
+					</div>
+		</section>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$(document).ready(function () {
+
+			var auth = localStorage.getItem("auth");
+			if (!auth) {
+				auth = prompt("Please enter your authorization value:");
+				getAuth();
+			}
+
+			function getAuth() {
+				$.ajax({
+					url: 'https://cors-djgq.onrender.com/https://www.unifaunonline.com/delivery-checkout/v1/lts-services/DH/',
+					method: 'GET',
+					headers: {
+						Authorization: 'Basic ' + auth
+					}
+				}).done(function (data) {
+					localStorage.setItem("auth", auth);
+					location.reload();
+
+				}).fail(function (jqXHR, textStatus, errorThrown) {
+					localStorage.removeItem("auth");
+					auth = prompt("Failed to get authorization. Please enter your authorization value again.");
+					getAuth();
+				});
+			}
+
+			$('.addons-row').find('#fields-table .field-row:first-child button#deleteFieldBtn').hide();
+			$('.addons-row').find('#external-table .external-row:first-child button#removeExternalBtn').hide();
+			$('.addon-section:first-child').find('button#deleteBtn').hide();
+			$("#alertSucess").hide();
+			$("#alertError").hide();
+			var currentDate = new Date().toISOString().slice(0, 10);
+			$('#startDate').val(currentDate);
+
+			var addonIndex = 1; // Keep track of addon index
+
+			$(document).on('click', '#addAddonBtn', function () {
+				var addonRow = $('.addon-section').first().clone();
+				addonRow.find('input[name="addonId"]').val('');
+				addonRow.find('input[name="caption"]').val('');
+				addonRow.find('input[name="routes"]').val('');
+				addonRow.find('input[name="dependsOn"]').val('');
+				addonRow.find('input[name="exclusions"]').val('');
+				addonRow.find('#fields-table .field-row:not(:first-child)').remove();
+				addonRow.find('.field-row:first-child input').val('');
+				addonRow.find('#external-table .external-row:not(:first-child)').remove();
+				addonRow.find('.external-row:first-child input').val('');
+				addonRow.find('button#deleteBtn').show();
+				$('.addon-section').last().after(addonRow);
+			});
+
+			$(document).on('click', '#deleteBtn', function () {
+				var addonSection = $(this).closest('.addon-section');
+				var addonRowCount = $('.addon-section').length;
+				if (addonRowCount > 1) {
+					addonSection.remove();
+				}
+			});
+
+			$(document).on('click', '#addFieldBtn', function () {
+				var fieldRow = $(this).closest('.addons-row').find('#fields-table').find('.field-row').first().clone();
+				$(this).closest('.addons-row').find('#fields-table').append(fieldRow);
+				fieldRow.find('input[name^="fieldId"]').val('');
+				fieldRow.find('input[name^="fieldCaption"]').val('');
+				fieldRow.find('input[name^="fieldType"]').val('');
+				fieldRow.find('input[name^="mandatory"]').val('');
+				fieldRow.find('button#deleteFieldBtn').show();
+			});
+			$(document).on('click', '#addFieldsBtn', function () {
+				var fieldRow = $(this).closest('.addons-row').find('#external-table').find('.external-row').first().clone();
+				$(this).closest('.addons-row').find('#external-table').append(fieldRow);
+				fieldRow.find('input[name="externalSystemCode"]').val('');
+				fieldRow.find('input[name="externalSystemType"]').val('');
+				fieldRow.find('button#removeExternalBtn').show();
+			});
+
+			$(document).on('click', '#deleteFieldBtn', function () {
+				var fieldRow = $(this).closest('.field-row');
+				var fieldTable = fieldRow.closest('#fields-table');
+				var fieldRowCount = fieldTable.find('.field-row').length;
+				if (fieldRowCount > 1) {
+					fieldRow.remove();
+				}
+			});
+
+			$(document).on('click', '#removeExternalBtn', function () {
+				var ExternalRow = $(this).closest('.external-row');
+				var externalTable = ExternalRow.closest('#external-table');
+				var ExternalRowCount = externalTable.find('.external-row').length;
+				if (ExternalRowCount > 1) {
+					ExternalRow.remove();
+				}
+			});
+		
+		
+			var addExternalSystemBool = false;
+			var externalSystemAddonsContainer = $("#externalSystemAddonsContainer");
+			externalSystemAddonsContainer.hide();
+
+			$('#addExternalSystemAddonRow').click(function () {
+				addExternalSystemBool = !addExternalSystemBool;
+				if (addExternalSystemBool) {
+					$('#addExternalSystemAddonRow').removeClass('btn-success').addClass('btn-warning').text("Disable External System");
+					externalSystemAddonsContainer.show();
+				} else {
+					$('#addExternalSystemAddonRow').removeClass('btn-warning').addClass('btn-success').text("Enable External System");
+					externalSystemAddonsContainer.hide();
+				}
+			});
+
+			var FieldslSystemBool = false;
+			var FieldsContainer = $("#FieldsContainer");
+			FieldsContainer.hide();
+
+			$('#fieldsRow').click(function () {
+				FieldslSystemBool = !FieldslSystemBool;
+				if (FieldslSystemBool) {
+					$('#fieldsRow').removeClass('btn-success').addClass('btn-warning').text("Disable Fields");
+					FieldsContainer.show();
+				} else {
+					$('#fieldsRow').removeClass('btn-warning').addClass('btn-success').text("Enable Fields");
+					FieldsContainer.hide();
+				}
+			});
+
+			var AddonsContainerForm = $("#addonContainer");
+			var AddonsBool = false;
+			AddonsContainerForm.hide();
+
+			$('#AddonRow').click(function () {
+				AddonsBool = !AddonsBool;
+				if (AddonsBool) {
+					$('#AddonRow').removeClass('btn-success').addClass('btn-warning').text("Disable Addons");
+					AddonsContainerForm.show();
+				} else {
+					$('#AddonRow').removeClass('btn-warning').addClass('btn-success').text("Enable Addons");
+					AddonsContainerForm.hide();
+				}
+			});
+
+			$("#lts-form").submit(function (event) {
+				const fieldArray = [];
+				if (FieldslSystemBool == true) {
+					fieldArray.push({
+						id: document.getElementById('fieldId').value,
+						caption: document.getElementById('fieldCaption').value,
+						type: document.getElementById('fieldType').value,
+						mandatory: document.getElementById('fieldMandatory').value === 'true',
+					});
+				}
+
+				const externalSystemAddons = [];
+
+				if (addExternalSystemBool == true) {
+					externalSystemAddons.push({
+						externalSystemCode: document.getElementById('externalSystemCode').value,
+						code: document.getElementById('externalSystemCarrier').value,
+						type: document.getElementById('externalSystemType').value,
+						typeWhenAgentExists: document.getElementById('typeWhenAgentExists').value,
+						typeWhenPickupLockerExists: document.getElementById('typeWhenPickupLockerExists').value,
+						displayCustomerTypeOfficeDeliverySetting: document.getElementById('displayCustomerTypeOfficeDeliverySetting').value === 'true',
+					});
+				}
+
+				var auth = localStorage.getItem("auth");
+				var addons = [];
+
+				function generateAddons() {
+					var addons = [];
+					$(".addons-row").each(function () {
+						var addon = {};
+						var addonRow = $(this);
+						addon.id = addonRow.find('input[name="addonId"]').val();
+						addon.caption = addonRow.find('input[name="caption"]').val();
+						addon.routes = null;
+						var fields = [];
+
+						addonRow.find('#fields-table .field-row').each(function () {
+							var field = {};
+							var fieldRow = $(this);
+							field.id = fieldRow.find('input[name^="fieldId"]').val();
+							field.caption = fieldRow.find('input[name^="fieldCaption"]').val();
+							field.type = fieldRow.find('input[name^="fieldType"]').val();
+							field.mandatory = fieldRow.find('select[name^="mandatory"]').val() === 'true';
+							fields.push(field);
+						});
+
+						addon.fields = fields;
+						addon.dependsOn = null;
+						addon.exclusions = null;
+						var externalSystemAddons = [];
+
+						addonRow.find('#external-table .external-row').each(function () {
+							var externalSystemAddon = {};
+							var externalSystemRow = $(this);
+							externalSystemAddon.externalSystemCode = externalSystemRow.find('input[name="externalSystemCode"]').val();
+							externalSystemAddon.type = externalSystemRow.find('input[name="externalSystemType"]').val();
+
+							externalSystemAddons.push(externalSystemAddon);
+						});
+
+						addon.externalSystemAddons = externalSystemAddons;
+						addons.push(addon);
+					});
+
+					return addons;
+				}
+
+				var addons = null;
+				if (AddonsBool == true) {
+					addons = generateAddons();
+				}
+
+
+				var json = JSON.stringify({ addons: addons }, null, 2);
+//NTI1QU1TQTdLNzZRWUhWUTpYVDYzQk5LNDdKTEFUUTNLVTRTQUpIRUY=
+				event.preventDefault();
+				$.ajax({
+					url: 'https://cors-djgq.onrender.com/https://www.unifaunonline.com/delivery-checkout/v1/lts-services',
+					type: "POST",
+					headers: {
+						"Content-Type": "application/json",
+						"Authorization": 'Basic' + ' ' + auth
+					},
+					data: JSON.stringify({
+						"code": $("#code").val(),
+						"caption": $("#caption").val(),
+						"sourceSystem": $("#sourceSystem").val(),
+						"startDate": $("#startDate").val(),
+						"logoId": $("#logoId").val(),
+						"pudoId": $("#pudoId").val(),
+						"pudoSystem": $("#pudoSystem").val(),
+						"postalCodeId": null,
+						"serviceVersion": "2.0",
+						"fields": fieldArray,
+						"addons": addons,
+						"defaultAddons": null,
+						"routes": [{
+							"from": ["*"],
+							"to": ["*"]
+						}],
+						"addonAtLeastOne": null,
+						"addonOneOfs": null,
+						"pudoRoutes": null,
+						"isCustomAgent": $("#isCustomAgent").val() === "true",
+						"shipmentWeightLimit": null,
+						"minimumParcelWeightLimit": null,
+						"maximumParcelWeightLimit": null,
+						"typeOfAgents": [],
+						"externalJobs": [],
+						"externalSystemServices": externalSystemAddons,
+						"carrierCredentials": null
+					}),
+					success: function (response) {
+						$("#alertSucess").show();
+						$("#alertError").hide();
+					},
+					error: function (xhr, status, error) {
+						$("#alertSucess").hide();
+						$("#alertError").show();
+						$('#alertError').text(error);
+
+					}
+				});
+			});
+		});
+	</script>
+	<script src="assets/bundles/libscripts.bundle.js"></script>
+	<script src="assets/bundles/vendorscripts.bundle.js"></script>
+	<script src="assets/bundles/mainscripts.bundle.js"></script>
+</body>
+
+</html>

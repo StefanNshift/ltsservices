@@ -1,0 +1,221 @@
+<!doctype html>
+<html class="no-js " lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>Nshift- LTS Services</title>
+	<link rel="icon" type="image/ico" href="assets/images/favicon.ico" />
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/js/vendor/bootstrap/bootstrap.min.css">
+	<link rel="stylesheet" href="assets/css/vendor/animsition.min.css">
+	<link rel="stylesheet" href="assets/css/main.css">
+	<link rel="stylesheet" href="assets/js/vendor/sweetalert/sweetalert2.css">
+	<style>
+		input:read-only {
+			background-color: #f5f5f5;
+			border: 1px solid #ddd;
+			color: #888;
+		}
+
+		#carrierList>tbody>tr:hover {
+			background: #0015A3;
+			color: white;
+		}
+	</style>
+</head>
+
+<body id="Nshift" class="main_Wrapper">
+	<div id="wrap" class="animsition">
+		<div id="controls">
+			<aside id="leftmenu" style="top:0px">
+				<div id="leftmenu-wrap">
+					<div class="panel-group slim-scroll" role="tablist">
+						<div class="panel panel-default">
+							<div id="leftmenuNav" class="panel-collapse collapse in" role="tabpanel">
+								<div class="panel-body">
+									<ul id="navigation">
+										<li>
+											<a href="ltsservices.html"> <i class="fa fa-angle-right"></i>LTS
+												Services</a>
+										</li>
+										<li>
+											<a href="addlts.html"> <i class="fa fa-angle-right"></i>Add LTS Service</a>
+										</li>
+										<li class="active">
+											<a href="uploadlts.html"> <i class="fa fa-angle-right"></i>Upload LTS
+												Logo</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</aside>
+			<aside id="rightmenu">
+				<div role="tabpanel">
+					<ul class="nav nav-tabs" role="tablist">
+						<li role="presentation" class="active">
+							<a href="#chat" aria-controls="chat" role="tab" data-toggle="tab">Chat</a>
+						</li>
+						<li role="presentation">
+							<a href="#todo" aria-controls="todo" role="tab" data-toggle="tab">Todo</a>
+						</li>
+						<li role="presentation">
+							<a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a>
+						</li>
+					</ul>
+					<div class="tab-content">
+						<div role="tabpanel" class="tab-pane active" id="chat"></div>
+						<div role="tabpanel" class="tab-pane" id="todo"></div>
+						<div role="tabpanel" class="tab-pane" id="settings"></div>
+					</div>
+				</div>
+			</aside>
+		</div>
+		<section style="top:0px" id="content">
+			<div class="page bootstrap-page-tables">
+				<div class="b-b mb-10">
+					<div class="row">
+						<div class="col-sm-6 col-xs-12">
+							<h1 class="h3 m-0">DH LTS Services</h1>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6 col-sm-12">
+						<section class="boxs">
+							<div class="boxs-header">
+								<h3 class="custom-font hb-blush">
+									<strong>Upload LTS Logo</strong>
+								</h3>
+							</div>
+							<div class="boxs-body">
+								<form id="upload-form" class="mb-5" enctype="multipart/form-data">
+									<div class="form-group">
+										<div class="form-group">
+											<img style="width: 250px; height: 250px" id="logo-preview" src="#"
+												alt="Logo preview" />
+										</div>
+										<button for="logo-file">Logo:</button>
+										<input type="file" class="form-control-file" id="logo-file" name="logo">
+										<span id="file-name"></span>
+									</div>
+									<div class="form-group">
+										<label for="logo-id">Logo ID:</label>
+										<input type="text" class="form-control" id="logo-id" name="logoId" value="">
+									</div>
+									<div class="form-group">
+										<label for="source-system">Source system:</label>
+										<input type="text" class="form-control" id="source-system" name="sourceSystem"
+											value="TS">
+									</div>
+									<div class="form-group">
+										<label for="logo-version">Logo version:</label>
+										<input type="text" class="form-control" id="logo-version" name="logoVersion"
+											value="1.0">
+									</div>
+									<button type="submit" class="btn btn-raised btn-primary">Submit</button>
+								</form>
+								<div id="alertSuccess" class="alert alert-success" role="alert">New LTS Service Added
+								</div>
+								<div id="alertError" class="alert alert-danger" role="alert">Could Not Create LTS
+									Service</div>
+							</div>
+						</section>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script>
+		$(document).ready(function () {
+
+			var auth = localStorage.getItem("auth");
+
+			function getAuth() {
+				$.ajax({
+					url: 'https://cors-djgq.onrender.com/https://www.unifaunonline.com/delivery-checkout/v1/lts-services/DH/',
+					method: 'GET',
+					headers: {
+						Authorization: 'Basic ' + auth
+					}
+				}).done(function (data) {
+					localStorage.setItem("auth", auth);
+					location.reload();
+
+				}).fail(function (jqXHR, textStatus, errorThrown) {
+					localStorage.removeItem("auth");
+					auth = prompt("Failed to get authorization. Please enter your authorization value again.");
+					getAuth();
+				});
+			}
+
+		
+
+			$("#alertSuccess").hide();
+			$("#alertError").hide();
+
+			function uploadLogo() {
+				var auth = localStorage.getItem("auth");
+
+					const form = $('#upload-form')[0];
+					const formData = new FormData(form);
+					$.ajax({
+						url: 'https://cors-djgq.onrender.com/https://www.unifaunonline.com/delivery-checkout/v1/lts-services/DH/',
+						type: 'POST',
+						headers: {
+							Authorization: 'Basic' + ' ' + auth
+						},
+						data: formData,
+						processData: false,
+						contentType: false,
+						success: function (response) {
+							$("#alertSuccess").show();
+							$("#alertError").hide();
+						},
+						error: function (xhr, status, error) {
+							$("#alertSuccess").hide();
+							$("#alertError").show();
+						}
+					});
+				
+			}
+
+			// Hide the logo preview and show it when a file is selected
+			$("#logo-preview").hide();
+
+			$("#logo-file").on("change", function () {
+				const fileInput = $(this);
+				const logoPreview = $("#logo-preview");
+				const fileNameElement = $("#file-name");
+				logoPreview.show();
+				const fileName = fileInput.val().split("\\").pop();
+				fileNameElement.text(fileName);
+				const reader = new FileReader();
+				reader.onload = function (e) {
+					logoPreview.attr("src", e.target.result);
+				};
+				reader.readAsDataURL(this.files[0]);
+			});
+
+			// Hide the success and error alerts and upload the logo when the form is submitted
+			$("#alertSuccess").hide();
+			$("#alertError").hide();
+			$('#upload-form').submit(function (event) {
+				event.preventDefault();
+				uploadLogo();
+			});
+		});
+	</script>
+	<script src="assets/bundles/libscripts.bundle.js"></script>
+	<script src="assets/bundles/vendorscripts.bundle.js"></script>
+	<script src="assets/bundles/mainscripts.bundle.js"></script>
+</body>
+</html>
