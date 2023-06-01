@@ -555,7 +555,7 @@
 					error: function (xhr, status, error) {
 						$("#alertSucess").hide();
 						$("#alertError").show();
-						$('#alertError').text(error);
+						$('#alertError').text(xhr.responseText);
 
 					}
 				});

@@ -119,7 +119,7 @@
 									</div>
 									<button type="submit" class="btn btn-raised btn-primary">Submit</button>
 								</form>
-								<div id="alertSuccess" class="alert alert-success" role="alert">New LTS Service Added
+								<div id="alertSuccess" class="alert alert-success" role="alert">New LTS Logo Added
 								</div>
 								<div id="alertError" class="alert alert-danger" role="alert">Could Not Create LTS
 									Service</div>
@@ -168,7 +168,7 @@
 					const form = $('#upload-form')[0];
 					const formData = new FormData(form);
 					$.ajax({
-						url: 'https://cors-djgq.onrender.com/https://www.unifaunonline.com/delivery-checkout/v1/lts-services/DH/',
+						url: 'https://cors-anywhere.herokuapp.com/https://www.unifaunonline.com/delivery-checkout/v1/lts-logos',
 						type: 'POST',
 						headers: {
 							Authorization: 'Basic' + ' ' + auth
@@ -182,6 +182,7 @@
 						},
 						error: function (xhr, status, error) {
 							$("#alertSuccess").hide();
+							$('#alertError').text(xhr.statusText);
 							$("#alertError").show();
 						}
 					});
