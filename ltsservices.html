@@ -171,12 +171,13 @@
       var filterInput = $("#filter-input");
 
       var auth = localStorage.getItem("auth");
-      if (!auth) {
+      if (!auth || auth == "null" ) {
         auth = prompt("Please enter your authorization value:");
         getAuth();
       }
 
       function getAuth() {
+        localStorage.setItem("auth", auth);
         $.ajax({
           url: "https://cors-djgq.onrender.com/https://www.unifaunonline.com/delivery-checkout/v1/lts-services/DH/",
           method: "GET",

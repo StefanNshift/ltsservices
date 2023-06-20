@@ -43,7 +43,7 @@
 										<li>
 											<a href="addlts.html"> <i class="fa fa-angle-right"></i>Add LTS Service</a>
 										</li>
-											<li class="active">
+										<li class="active">
 											<a href="uploadlts.html"> <i class="fa fa-angle-right"></i>Add LTS
 												Logo</a>
 										</li>
@@ -141,9 +141,16 @@
 	<script>
 		$(document).ready(function () {
 
+
 			var auth = localStorage.getItem("auth");
+			if (!auth || auth == "null") {
+				auth = prompt("Please enter your authorization value:");
+				getAuth();
+			}
 
 			function getAuth() {
+				localStorage.setItem("auth", auth);
+
 				$.ajax({
 					url: 'https://cors-djgq.onrender.com/https://www.unifaunonline.com/delivery-checkout/v1/lts-services/DH/',
 					method: 'GET',
@@ -161,7 +168,7 @@
 				});
 			}
 
-		
+
 
 			$("#alertSuccess").hide();
 			$("#alertError").hide();
@@ -169,28 +176,28 @@
 			function uploadLogo() {
 				var auth = localStorage.getItem("auth");
 
-					const form = $('#upload-form')[0];
-					const formData = new FormData(form);
-					$.ajax({
-						url: 'https://cors-anywhere.herokuapp.com/https://www.unifaunonline.com/delivery-checkout/v1/lts-logos',
-						type: 'POST',
-						headers: {
-							Authorization: 'Basic' + ' ' + auth
-						},
-						data: formData,
-						processData: false,
-						contentType: false,
-						success: function (response) {
-							$("#alertSuccess").show();
-							$("#alertError").hide();
-						},
-						error: function (xhr, status, error) {
-							$("#alertSuccess").hide();
-							$('#alertError').text(xhr.statusText);
-							$("#alertError").show();
-						}
-					});
-				
+				const form = $('#upload-form')[0];
+				const formData = new FormData(form);
+				$.ajax({
+					url: 'https://cors-anywhere.herokuapp.com/https://www.unifaunonline.com/delivery-checkout/v1/lts-logos',
+					type: 'POST',
+					headers: {
+						Authorization: 'Basic' + ' ' + auth
+					},
+					data: formData,
+					processData: false,
+					contentType: false,
+					success: function (response) {
+						$("#alertSuccess").show();
+						$("#alertError").hide();
+					},
+					error: function (xhr, status, error) {
+						$("#alertSuccess").hide();
+						$('#alertError').text(xhr.statusText);
+						$("#alertError").show();
+					}
+				});
+
 			}
 
 			// Hide the logo preview and show it when a file is selected
@@ -223,4 +230,5 @@
 	<script src="assets/bundles/vendorscripts.bundle.js"></script>
 	<script src="assets/bundles/mainscripts.bundle.js"></script>
 </body>
+
 </html>
