@@ -520,11 +520,14 @@
                 defaultAddons: {
                   type: "object",
                   properties: {
-                    defaultAddons: {
+                    id: {
                       id: "array",
                     },
                     useIfServiceHasAgents: {
                       type: "boolean",
+                    },
+                    dropPointTypes: {
+                      type: "array",
                     },
                   },
                 },
@@ -578,6 +581,11 @@
           savedLTSData.addons = normalizeProperties(savedLTSData.addons, 'fields', 'id');
           savedLTSData.addons = normalizeProperties(savedLTSData.addons, 'externalSystemAddons', 'externalSystemCode');
         }
+
+        if(savedLTSData.postalCodeId == ""){
+          savedLTSData.postalCodeId = null;
+      }
+
         $.ajax({
           url: 'https://cors-djgq.onrender.com/https://www.unifaunonline.com/delivery-checkout/v1/lts-services',
           type: "POST",
