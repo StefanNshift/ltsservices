@@ -18,20 +18,21 @@
 
   <link href="jsonToForm/jsonToForm.css" rel="stylesheet" type="text/css" />
   <style>
-    input:read-only {
-      background-color: #f5f5f5;
-      border: 1px solid #ddd;
-      color: #888;
-    }
 
     input:read-only {
-      background-color: #f5f5f5;
-      border: 1px solid #ddd;
-      color: #888;
-    }
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    color: #888;
+    height: 20px;
+    width: 40px;
+    margin-top: 10px;
+}
+.j-add-array-item{
+  color:#161616;
+}
 
     .j-inline-help{
-      color: #171616;
+      color: #2C2C2C;
     }
     .checkbox label,
     .radio label,
@@ -75,7 +76,7 @@
     .j-remove-array-item {
       font-size: 15px;
     }
-
+    
     .j-oject-title-row,
     .j-array-title-row,
     .j-oject-title-row td,
@@ -226,7 +227,7 @@
             title: "sourceSystem",
             type: "string",
             ui: {
-              placeholderHint: "Enter string",
+              placeholderHint:"Enter sourceSystem.",
               inlineHint:
                 "System that created the service, should always be the same value for each source system",
 
@@ -236,7 +237,7 @@
             title: "serviceVersion",
             type: "string",
             ui: {
-              placeholderHint: "Enter string",
+              placeholderHint:"Enter value or leave empty.",
               inlineHint:
                 "Used to add a version to the system which can be used by the source system if you wish to add your own versioning to the services. Not used internally by the UDC, only for the API consumers convenience",
 
@@ -255,7 +256,7 @@
             title: "logoId",
             type: "string",
             ui: {
-              placeholderHint: "Enter string",
+              placeholderHint:"Enter value or leave empty.",
               inlineHint:
                 "Id of the logo to associate with this service. Logo should be uploaded using the Add LTS Logo",
 
@@ -265,7 +266,7 @@
             title: "pudoId",
             type: "string",
             ui: {
-              placeholderHint: "Enter string",
+              placeholderHint:"Enter value or leave empty.",
               inlineHint:
                 "The id used for sending a lookup request to PUDO for agents.",
             },
@@ -274,7 +275,7 @@
             title: "pudoSystem",
             type: "string",
             ui: {
-              placeholderHint: "Enter string",
+              placeholderHint:"Enter value or leave empty.",
               inlineHint:
                 "Which system is used for lookup of PUDOs. If empty and pudoId is set then PUDO is set as pudoSystem",
 
@@ -284,7 +285,7 @@
             title: "postalCodeId",
             type: "string",
             ui: {
-              placeholderHint: "Enter string",
+              placeholderHint:"Enter value or leave empty.",
               inlineHint:
                 "Code of postal code data to associate with this service. See LTS - Postal Codes API for reference. If not provided the service will be valid for use based upon the routes field only.",
             },
@@ -327,7 +328,7 @@
               $ref: "#/definitions/externalSystemServices",
             },
             ui: {
-              placeholderHint: "Enter string",
+              placeholderHint:"Enter value or leave empty.",
               inlineHint:
                 "Sets values to be used when using external systems for example Klarna.",
             },
@@ -339,7 +340,7 @@
               $ref: "#/definitions/fields",
             },
             ui: {
-              placeholderHint: "Enter string",
+              placeholderHint:"Enter value or leave empty.",
               inlineHint:
                 "Fields that will be associated with the service itself or an addon. An example of a field could be where the customer can input their phone number or email address, which can then be used to notify or contact the end customer",
 
@@ -353,7 +354,7 @@
               $ref: "#/definitions/addons",
             },
             ui: {
-              placeholderHint: "Enter string",
+              placeholderHint:"Enter value or leave empty.",
               inlineHint:
                 "Addons offered with the given service",
 
@@ -366,7 +367,7 @@
               $ref: "#/definitions/defaultAddons",
             },
             ui: {
-              placeholderHint: "Enter string",
+              placeholderHint:"Enter value or leave empty.",
               inlineHint:
                 "Addons which will always be added to the service when creating the shipment",
 
