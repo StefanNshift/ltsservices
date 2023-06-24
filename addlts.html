@@ -18,22 +18,28 @@
 
   <link href="jsonToForm/jsonToForm.css" rel="stylesheet" type="text/css" />
   <style>
-
     input:read-only {
-    background-color: #f5f5f5;
-    border: 1px solid #ddd;
-    color: #888;
-    height: 20px;
-    width: 40px;
-    margin-top: 10px;
-}
-.j-add-array-item{
-  color:#161616;
-}
+      background-color: #f5f5f5;
+      border: 1px solid #ddd;
+      color: #888;
+      height: 20px;
+      width: 40px;
+      margin-top: 10px;
+    }
+  
+    #jsonEditor_\' > table:nth-child(14) > tbody > tr.j-array-title-row > td.j-title-col > span.j-add-array-item{
+      display: none;
+    }
+    
+    
+    .j-add-array-item {
+      color: #161616;
+    }
 
-    .j-inline-help{
+    .j-inline-help {
       color: #2C2C2C;
     }
+
     .checkbox label,
     .radio label,
     label {
@@ -76,7 +82,7 @@
     .j-remove-array-item {
       font-size: 15px;
     }
-    
+
     .j-oject-title-row,
     .j-array-title-row,
     .j-oject-title-row td,
@@ -147,7 +153,7 @@
                       <td style="width: 2%">&nbsp;</td>
                       <td style="width: 40%; vertical-align: top">
 
-                        <button style="margin-top: 0px;"  id="saveBtn" class="btn btn-raised btn-primary">
+                        <button style="margin-top: 0px;" id="saveBtn" class="btn btn-raised btn-primary">
                           Add LTS
                           <div class="ripple-container"></div>
                         </button>
@@ -174,7 +180,7 @@
       $("#alertError").hide();
 
       var auth = localStorage.getItem("auth");
-      if (!auth || auth == "null" ) {
+      if (!auth || auth == "null") {
         auth = prompt("Please enter your authorization value:");
         getAuth();
       }
@@ -227,20 +233,27 @@
             title: "sourceSystem",
             type: "string",
             ui: {
-              placeholderHint:"Enter sourceSystem.",
+              placeholderHint: "Enter sourceSystem.",
               inlineHint:
                 "System that created the service, should always be the same value for each source system",
 
             },
           },
+          sourceSystemCode: {
+            title: "sourceSystemCode",
+            type: "string",
+            ui: {
+              placeholderHint: "Enter value or leave empty.",
+            },
+          },
+
           serviceVersion: {
             title: "serviceVersion",
             type: "string",
             ui: {
-              placeholderHint:"Enter value or leave empty.",
+              placeholderHint: "Enter value or leave empty.",
               inlineHint:
                 "Used to add a version to the system which can be used by the source system if you wish to add your own versioning to the services. Not used internally by the UDC, only for the API consumers convenience",
-
             },
           },
           startDate: {
@@ -256,7 +269,7 @@
             title: "logoId",
             type: "string",
             ui: {
-              placeholderHint:"Enter value or leave empty.",
+              placeholderHint: "Enter value or leave empty.",
               inlineHint:
                 "Id of the logo to associate with this service. Logo should be uploaded using the Add LTS Logo",
 
@@ -266,7 +279,7 @@
             title: "pudoId",
             type: "string",
             ui: {
-              placeholderHint:"Enter value or leave empty.",
+              placeholderHint: "Enter value or leave empty.",
               inlineHint:
                 "The id used for sending a lookup request to PUDO for agents.",
             },
@@ -275,7 +288,7 @@
             title: "pudoSystem",
             type: "string",
             ui: {
-              placeholderHint:"Enter value or leave empty.",
+              placeholderHint: "Enter value or leave empty.",
               inlineHint:
                 "Which system is used for lookup of PUDOs. If empty and pudoId is set then PUDO is set as pudoSystem",
 
@@ -285,13 +298,13 @@
             title: "postalCodeId",
             type: "string",
             ui: {
-              placeholderHint:"Enter value or leave empty.",
+              placeholderHint: "Enter value or leave empty.",
               inlineHint:
                 "Code of postal code data to associate with this service. See LTS - Postal Codes API for reference. If not provided the service will be valid for use based upon the routes field only.",
             },
           },
 
-          isCustomAgent : {
+          isCustomAgent: {
             title: "isCustomAgent",
             type: "boolean",
             ui: {
@@ -300,11 +313,11 @@
             },
           },
 
-          isCustomCarrier : {
+          isCustomCarrier: {
             title: "isCustomCarrier",
             type: "boolean",
             ui: {
-             
+
             },
           },
 
@@ -317,7 +330,7 @@
             },
             ui: {
               inlineHint:
-                "Information about which routes this addon/service is valid for.",
+                "Information about which routes,For all countries write * for customized countries write country code and comma example SE,DK,NO",
 
             },
           },
@@ -328,7 +341,7 @@
               $ref: "#/definitions/externalSystemServices",
             },
             ui: {
-              placeholderHint:"Enter value or leave empty.",
+              placeholderHint: "Enter value or leave empty.",
               inlineHint:
                 "Sets values to be used when using external systems for example Klarna.",
             },
@@ -340,7 +353,7 @@
               $ref: "#/definitions/fields",
             },
             ui: {
-              placeholderHint:"Enter value or leave empty.",
+              placeholderHint: "Enter value or leave empty.",
               inlineHint:
                 "Fields that will be associated with the service itself or an addon. An example of a field could be where the customer can input their phone number or email address, which can then be used to notify or contact the end customer",
 
@@ -354,7 +367,7 @@
               $ref: "#/definitions/addons",
             },
             ui: {
-              placeholderHint:"Enter value or leave empty.",
+              placeholderHint: "Enter value or leave empty.",
               inlineHint:
                 "Addons offered with the given service",
 
@@ -367,7 +380,7 @@
               $ref: "#/definitions/defaultAddons",
             },
             ui: {
-              placeholderHint:"Enter value or leave empty.",
+              placeholderHint: "Enter value or leave empty.",
               inlineHint:
                 "Addons which will always be added to the service when creating the shipment",
 
@@ -482,10 +495,10 @@
             type: "object",
             properties: {
               from: {
-                type: "array",
+                type: "string",
               },
               to: {
-                type: "array",
+                type: "string",
               },
             },
           },
@@ -515,7 +528,11 @@
                 type: "boolean",
               },
               dropPointTypes: {
-                      type: "array",
+                      type: "string",
+                      ui: {
+                    inlineHint:
+                "Write dropPointTypes as and comma example LOCKER,SHOP",
+                  },
                     },
             },
           },
@@ -539,11 +556,11 @@
       var month = today.getMonth() + 1;
       var year = today.getFullYear();
       var formattedDate = year + '-' + (month < 10 ? '0' + month : month) + '-' + (day < 10 ? '0' + day : day);
-
       var ltsData = {
         code: "",
         caption: "",
         sourceSystem: "DH",
+        sourceSystemCode: null,
         startDate: formattedDate,
         logoId: "",
         pudoId: "",
@@ -561,11 +578,10 @@
         addons: [],
         routes: [
           {
-            from: ["*"],
-            to: ["*"],
+            from: "*",
+            to: "*"
           },
         ],
-
         addonAtLeastOne: [],
         addonOneOfs: [],
         defaultAddons: [],
@@ -576,13 +592,43 @@
         schema: LTSSchema,
         value: ltsData,
         afterValueChanged: function (newValue, newSchema) {
+          if (
+            typeof newValue !== "undefined" &&
+            newValue.defaultAddons &&
+            newValue.defaultAddons[0] &&
+            newValue.defaultAddons[0].dropPointTypes
+          ) {
+            newValue.defaultAddons[0].dropPointTypes = convertToArray(newValue.defaultAddons[0].dropPointTypes);
+          }
+          newValue.routes[0].from = convertToArray(newValue.routes[0].from);
+          newValue.routes[0].to = convertToArray(newValue.routes[0].to);
+
           $("#jsonValue").html(JSON.stringify(newValue, null, 2));
         },
         afterWidgetCreated: function (newValue, newSchema) {
+          newValue.routes[0].from = ['*'];
+          newValue.routes[0].to = ['*'];
+
           $("#jsonValue").html(JSON.stringify(newValue, null, 2));
         },
       });
 
+      function convertToArray(value) {
+        if (Array.isArray(value)) {
+          return value
+        }
+        else {
+          var arr = value.split(",");
+          return arr
+        }
+      }
+
+      function empty(str) {
+        if (typeof str == 'undefined' || !str || str.length === 0 || str === "" || !/[^\s]/.test(str) || /^\s*$/.test(str) || str.replace(/\s/g, "") === "")
+          return true;
+        else
+          return false;
+      }
 
       function normalizeProperties(addons, propertyName, subPropertyName) {
         return addons.map(addon => {
@@ -604,11 +650,27 @@
         savedLTSData.addons = normalizeProperties(savedLTSData.addons, 'fields', 'id');
         savedLTSData.addons = normalizeProperties(savedLTSData.addons, 'externalSystemAddons', 'externalSystemCode');
         event.preventDefault();
-        
-        if(savedLTSData.postalCodeId == ""){
+
+        if (savedLTSData.postalCodeId == "") {
           savedLTSData.postalCodeId = null;
-      }
-      
+        }
+
+        if (savedLTSData.sourceSystemCode == "") {
+          savedLTSData.sourceSystemCode = null;
+        }
+
+        if (
+          savedLTSData.defaultAddons &&
+          savedLTSData.defaultAddons[0] 
+            ) {
+              if(savedLTSData.defaultAddons[0].dropPointTypes){
+              }
+              else{
+               delete savedLTSData.defaultAddons[0].dropPointTypes;
+              }
+            }
+
+
         $.ajax({
           url: 'https://cors-djgq.onrender.com/https://www.unifaunonline.com/delivery-checkout/v1/lts-services',
           type: "POST",
@@ -620,7 +682,7 @@
           success: function (response) {
             $("#alertSucess").show();
             $("#alertError").hide();
-            $('#alertSucess').text("LTS Servie" + " " + savedLTSData.code + " " +  "Added" );
+            $('#alertSucess').text("LTS Servie" + " " + savedLTSData.code + " " + "Added");
           },
           error: function (xhr, status, error) {
             $("#alertSucess").hide();
@@ -637,4 +699,5 @@
   <script src="assets/bundles/mainscripts.bundle.js"></script>
   <script src="jsonToForm/jsonToForm.js"></script>
 </body>
+
 </html>

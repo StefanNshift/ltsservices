@@ -16,20 +16,21 @@
   <link href="jsonToForm/jsonToForm.css" rel="stylesheet" type="text/css" />
 
   <style>
- 
     input:read-only {
-    background-color: #f5f5f5;
-    border: 1px solid #ddd;
-    color: #888;
-    height: 20px;
-    width: 40px;
-    margin-top: 10px;
-}
-.j-add-array-item{
-  color:#161616;
-}
+      background-color: #f5f5f5;
+      border: 1px solid #ddd;
+      color: #888;
+      height: 20px;
+      width: 40px;
+      margin-top: 10px;
+    }
 
-    .j-inline-help{
+
+    .j-add-array-item {
+      color: #161616;
+    }
+
+    .j-inline-help {
       color: #2C2C2C;
     }
 
@@ -51,6 +52,7 @@
     .j-remove-array-item {
       font-size: 15px;
     }
+    
 
     .j-oject-title-row,
     .j-array-title-row,
@@ -147,6 +149,10 @@
                           Update LTS
                           <div class="ripple-container"></div>
                         </button>
+                        <button style="margin-top: 0px;" id="passwordButton" class="btn btn-raised btn-danger">
+                          Delete LTS
+                          <div class="ripple-container"></div>
+                        </button>
                         <div id="alertSucess" class="alert alert-success" role="alert">
                           LTS Servie Added
                         </div>
@@ -178,7 +184,7 @@
       var filterInput = $("#filter-input");
 
       var auth = localStorage.getItem("auth");
-      if (!auth || auth == "null" ) {
+      if (!auth || auth == "null") {
         auth = prompt("Please enter your authorization value:");
         getAuth();
       }
@@ -278,6 +284,13 @@
 
                   },
                 },
+                sourceSystemCode: {
+                  title: "sourceSystemCode",
+                  type: "string",
+                  ui: {
+                    placeholderHint: "Enter value or leave empty.",
+                  },
+                },
                 serviceVersion: {
                   title: "serviceVersion",
                   type: "string",
@@ -329,22 +342,22 @@
                       "Code of postal code data to associate with this service. See LTS - Postal Codes API for reference. If not provided the service will be valid for use based upon the routes field only.",
                   },
                 },
-                isCustomAgent : {
-            title: "isCustomAgent",
-            type: "boolean",
-            ui: {
-              inlineHint:
-                "Code of postal code data to associate with this service. See LTS - Postal Codes API for reference. If not provided the service will be valid for use based upon the routes field only.",
-            },
-          },
+                isCustomAgent: {
+                  title: "isCustomAgent",
+                  type: "boolean",
+                  ui: {
+                    inlineHint:
+                      "Code of postal code data to associate with this service. See LTS - Postal Codes API for reference. If not provided the service will be valid for use based upon the routes field only.",
+                  },
+                },
 
-          isCustomCarrier : {
-            title: "isCustomCarrier",
-            type: "boolean",
-            ui: {
-             
-            },
-          },
+                isCustomCarrier: {
+                  title: "isCustomCarrier",
+                  type: "boolean",
+                  ui: {
+
+                  },
+                },
                 routes: {
                   title: "routes",
                   type: "array",
@@ -353,7 +366,7 @@
                   },
                   ui: {
                     inlineHint:
-                      "Information about which routes this addon/service is valid for.",
+                      "Information about which routes,For all countries write * for customized countries write country code and comma example SE,DK,NO",
 
                   },
                 },
@@ -503,10 +516,10 @@
                   type: "object",
                   properties: {
                     from: {
-                      type: "array",
+                      type: "string",
                     },
                     to: {
-                      type: "array",
+                      type: "string",
                     },
                   },
                 },
@@ -534,7 +547,11 @@
                       type: "boolean",
                     },
                     dropPointTypes: {
-                      type: "array",
+                      type: "string",
+                      ui: {
+                        inlineHint:
+                          "Write dropPointTypes as and comma example LOCKER,SHOP",
+                      },
                     },
                   },
                 },
@@ -552,6 +569,18 @@
               },
             };
 
+
+            if (
+              data.defaultAddons &&
+              data.defaultAddons[0] &&
+              data.defaultAddons[0].dropPointTypes
+            ) {
+              data.defaultAddons[0].dropPointTypes = data.defaultAddons[0].dropPointTypes.toString();
+            }
+
+            data.routes[0].from = data.routes[0].from.toString();
+            data.routes[0].to = data.routes[0].to.toString();
+
             if (data.addons) {
               $.each(data.addons, function (index, addon) {
                 addon.fields = addon.fields ? addon.fields[0] : null;
@@ -563,9 +592,30 @@
               schema: LTSSchema,
               value: data,
               afterValueChanged: function (newValue, newSchema) {
+                if (
+                  typeof newValue !== "undefined" &&
+                  newValue.defaultAddons &&
+                  newValue.defaultAddons[0] &&
+                  newValue.defaultAddons[0].dropPointTypes
+                ) {
+                  newValue.defaultAddons[0].dropPointTypes = convertToArray(newValue.defaultAddons[0].dropPointTypes);
+                }
+                newValue.routes[0].from = convertToArray(newValue.routes[0].from);
+                newValue.routes[0].to = convertToArray(newValue.routes[0].to);
                 $("#jsonValue").html(JSON.stringify(newValue, null, 2));
               },
               afterWidgetCreated: function (newValue, newSchema) {
+                if (
+                  typeof newValue !== "undefined" &&
+                  newValue.defaultAddons &&
+                  newValue.defaultAddons[0] &&
+                  newValue.defaultAddons[0].dropPointTypes
+                ) {
+                  newValue.defaultAddons[0].dropPointTypes = convertToArray(newValue.defaultAddons[0].dropPointTypes);
+                }
+                newValue.routes[0].from = convertToArray(newValue.routes[0].from);
+                newValue.routes[0].to = convertToArray(newValue.routes[0].to);
+
                 $("#jsonValue").html(JSON.stringify(newValue, null, 2));
               },
             });
@@ -579,6 +629,49 @@
 
 
       });
+
+      function convertToArray(value) {
+        if (Array.isArray(value)) {
+          return value
+
+        }
+        else {
+          var arr = value.split(",");
+          return arr
+        }
+
+
+      }
+
+      $("#passwordButton").click(function () {
+        var ltsEditorData = myEditor.getValue();
+        var code = ltsEditorData.code;
+        var password = prompt("Enter the LTS-Code for delete the service:");
+        if (password === code) {
+          $.ajax({
+            url: 'https://cors-djgq.onrender.com/https://www.unifaunonline.com/delivery-checkout/v1/lts-services/DH/' + code,
+            type: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": 'Basic' + ' ' + auth
+            },
+            success: function (response) {
+              alert("LTS Service" + code + " Deleted");
+              location.reload();
+
+            },
+            error: function (xhr, status, error) {
+              $("#alertSucess").hide();
+              $("#alertError").show();
+              $('#alertError').text(JSON.stringify(xhr.responseJSON));
+            }
+          });
+        } else {
+          alert("Wrong LTS-Code. Please try again.");
+        }
+      });
+
+
       $("#updateLTSBtn").click(saveButtonClick);
       function saveButtonClick() {
 
@@ -589,9 +682,24 @@
           savedLTSData.addons = normalizeProperties(savedLTSData.addons, 'externalSystemAddons', 'externalSystemCode');
         }
 
-        if(savedLTSData.postalCodeId == ""){
+        if (savedLTSData.postalCodeId == "") {
           savedLTSData.postalCodeId = null;
-      }
+        }
+
+        if (savedLTSData.sourceSystemCode == "") {
+          savedLTSData.sourceSystemCode = null;
+        }
+
+        if (
+          savedLTSData.defaultAddons &&
+          savedLTSData.defaultAddons[0]
+        ) {
+          if (savedLTSData.defaultAddons[0].dropPointTypes) {
+          }
+          else {
+            delete savedLTSData.defaultAddons[0].dropPointTypes;
+          }
+        }
 
         $.ajax({
           url: 'https://cors-djgq.onrender.com/https://www.unifaunonline.com/delivery-checkout/v1/lts-services',
