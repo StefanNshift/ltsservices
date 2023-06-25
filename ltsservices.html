@@ -591,6 +591,7 @@
             myEditor = $("#jsonEditor").jsonToForm({
               schema: LTSSchema,
               value: data,
+              autoTrimValues:"false",
               afterValueChanged: function (newValue, newSchema) {
                 if (
                   typeof newValue !== "undefined" &&
