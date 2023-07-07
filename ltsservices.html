@@ -305,7 +305,7 @@
                   ui: {
                     editor: "date",
                     inlineHint:
-                      "The date the service will become available for use",
+                      "The date the service was last updatet",
                   },
                 },
                 logoId: {
@@ -550,7 +550,7 @@
                       type: "string",
                       ui: {
                         inlineHint:
-                          "Write dropPointTypes as and comma example LOCKER,SHOP",
+                          "Write dropPointTypes as and comma example locker,shop",
                       },
                     },
                   },
@@ -657,7 +657,7 @@
               "Authorization": 'Basic' + ' ' + auth
             },
             success: function (response) {
-              alert("LTS Service" + code + " Deleted");
+              alert("LTS Service" + code + + "" + "Deleted");
               location.reload();
 
             },
@@ -701,6 +701,8 @@
             delete savedLTSData.defaultAddons[0].dropPointTypes;
           }
         }
+
+        savedLTSData.startDate = new Date().toISOString().slice(0, 10);
 
         $.ajax({
           url: 'https://cors-djgq.onrender.com/https://www.unifaunonline.com/delivery-checkout/v1/lts-services',
