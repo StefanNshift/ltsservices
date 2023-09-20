@@ -342,6 +342,16 @@
                       "Code of postal code data to associate with this service. See LTS - Postal Codes API for reference. If not provided the service will be valid for use based upon the routes field only.",
                   },
                 },
+
+
+                certifications: {
+            title: "certifications",
+            type: "string",
+            ui: {
+              inlineHint: "Valid values are: nordicswan",
+            },
+          },
+
                 isCustomAgent: {
                   title: "isCustomAgent",
                   type: "boolean",
@@ -603,6 +613,8 @@
                 }
                 newValue.routes[0].from = convertToArray(newValue.routes[0].from);
                 newValue.routes[0].to = convertToArray(newValue.routes[0].to);
+                newValue.certifications = convertToArray(newValue.certifications);
+
                 $("#jsonValue").html(JSON.stringify(newValue, null, 2));
               },
               afterWidgetCreated: function (newValue, newSchema) {
@@ -686,6 +698,9 @@
         if (savedLTSData.postalCodeId == "") {
           savedLTSData.postalCodeId = null;
         }
+        if (savedLTSData.certifications == "") {
+          savedLTSData.certifications = null;
+        } 
 
         if (savedLTSData.sourceSystemCode == "") {
           savedLTSData.sourceSystemCode = null;
